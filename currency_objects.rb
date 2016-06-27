@@ -1,66 +1,41 @@
 class Currency
 
-  def initialize(value,currency_code,money_input)
-    @value = value
-    @currency_code = currency_code
-    @money_input = money_input
-  end
+     def initialize(amount, currency_code)
+       @amount = amount
+       @currency_code = currency_code
+     end
 
-  def value
-    if value.is_a? Float
-      @value = value
-    else value.is_a? Fixnum
-      value = value.to_f
-      return  @value
+     def  ==(other)
+       if @amount == other.amount && @currency_code == other.currency_code
+       end
+     end
+
+    def + (other)
+       @amount =+ other.amount
+       if @amount == other.currency_code
+       else
+         raise DifferentCurrencyCodeError, "you cant add currency from different countries."
+       end
     end
-  end
 
-  def currency_code
-    return @currency_code
-  end
-
-  def money_input
-    return @money_input
-  end
-
-  def  ==(other)
-    if @value == other.value && @currency_code == other.currency_code
-    end
-  end
-
-  def add=(other)
-    @value += other.value
-    if @value == other.currency_code
-    else
-      raise DifferentCurrencyCodeError, "you cant add currency from different countries."
-    end
-  end
-
-  def subtract=(other)
-    @value -= other.value
-    if @currency_code == other.currency_code
-    else
+    def - (other)
+       @amount -= other.amount
+        if @currency_code == other.currency_code
+       else
         raise DifferentCurrencyCodeError "you can't subtract currency from different countries."
+       end
     end
-  end
 
-  def multiply=(other)
-    if other.is_a? Float
-      @value *= other
-    elsif other.is_a? Fixnum
-      other = other.to_f
-      @value *= other
-    else
-      raise DifferentCurrencyCodeError "you can't subtract currency from different countries."
-    end
-  end
+     def *(other)
+         @value *= other
+     end
 end
 
-us_dollar_one = Currency.new(7,"dollar","$")
-us_dollar_two = Currency.new(5,"dollar","$")
+ d1 = Currency.new(5,"dollar")
+ d2 = Currency.new(20,"dollar")
+
+d2.*(11)
 
 
-test_multiply = us_dollar_one.multiply=(7.6)
-
-euro = Currency.new(1,"euro","€")
-euro5 = Currency.new(1,"euro","€")
+ e1 = Currency.new(1,"euro")
+ e2 = Currency.new(10,"euro")
